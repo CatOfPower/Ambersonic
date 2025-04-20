@@ -1,0 +1,56 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $AmbersonicPreferences: Adw.PreferencesDialog {
+    //default-width: 480;
+    //default-height: 400;
+    title: _("Preferences");
+
+    Adw.PreferencesPage {
+        title: _("Connection");
+        icon-name: "network-server-symbolic";
+
+        Adw.PreferencesGroup {
+            title: _("Server Settings");
+            description: _("Configure your Subsonic-compatible server connection");
+
+            Adw.EntryRow address {
+                title: _("Server Address");
+                tooltip-text: _("The URL of your music server");
+                
+                Image {
+                    icon-name: "network-server-symbolic";
+                }
+                text: "http://localhost:4533";
+            }
+
+            Adw.EntryRow username {
+                title: _("Username");
+                tooltip-text: _("Your server account username");
+                
+                Image {
+                    icon-name: "avatar-default-symbolic";
+                }
+                text: "navi";
+            }
+
+            Adw.PasswordEntryRow password {
+                title: _("Password");
+                tooltip-text: _("Your server account password");
+                
+                Image {
+                    icon-name: "dialog-password-symbolic";
+                }
+                text: "drome";
+                show-apply-button: true;
+            }
+
+            [action]
+            Button test_connection {
+                label: _("Test Connection");
+                css-classes: ["suggested-action"];
+                margin-top: 12;
+            }
+        }
+    }
+}

@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=cat.of.power.Ambersonic
+Exec=@bindir@/ambersonic --gapplication-service
