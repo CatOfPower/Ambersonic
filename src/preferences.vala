@@ -2,8 +2,11 @@
 public class Ambersonic.Preferences : Adw.PreferencesDialog {
     [GtkChild]
     private unowned Adw.EntryRow address;
+    [GtkChild]
     private unowned Adw.EntryRow username;
+    [GtkChild]
     private unowned Adw.PasswordEntryRow password;
+    
     private unowned Gtk.Button test_connection;
 
     private Settings settings;
