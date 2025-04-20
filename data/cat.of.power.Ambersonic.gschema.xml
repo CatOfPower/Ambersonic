@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="ambersonic">
 	<schema id="cat.of.power.Ambersonic" path="/cat/of/power/Ambersonic/">
+		<key name="address" type="s">
+			<default>"http://localhost:4533"</default>
+		</key>
+		<key name="username" type="s">
+			<default>"navi"</default>
+		</key>
+		<key name="password" type="s">
+			<default>"drome"</default>
+		</key>
 	</schema>
 </schemalist>

@@ -8,7 +8,6 @@ i18n = import('i18n')
 gnome = import('gnome')
 valac = meson.get_compiler('vala')
 
-
 srcdir = meson.project_source_root() / 'src'
 
 config_h = configuration_data()
