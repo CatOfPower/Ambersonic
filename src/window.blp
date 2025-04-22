@@ -21,6 +21,23 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
     content: Box main_box {
       orientation: vertical;
       spacing: 0;
+
+      ScrolledWindow {
+        Box albums_box {
+          orientation: vertical;
+          spacing: 12;
+          margin-start: 12;
+          margin-end: 12;
+          margin-top: 12;
+          margin-bottom: 12;
+          vexpand: true;
+          hexpand: true;
+
+          styles [
+            "album-list"
+          ]
+        }
+      }
     };
   };
 }
