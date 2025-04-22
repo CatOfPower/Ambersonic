@@ -1,5 +1,7 @@
 
 public class Ambersonic.Application : Adw.Application {
+    private Ambersonic.Preferences preferences;
+
     public Application () {
         Object (
             application_id: "cat.of.power.Ambersonic",
@@ -40,7 +42,10 @@ public class Ambersonic.Application : Adw.Application {
     }
 
     private void on_preferences_action () {
-        var preferences = new Ambersonic.Preferences ();
+        if (preferences == null) {
+            preferences = new Ambersonic.Preferences ();
+        }
+
         preferences.present (this.active_window);
     }
 }

@@ -18,12 +18,9 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
       }
     }
 
-    content: Label label {
-      label: _("Hello, World!");
-
-      styles [
-        "title-1",
-      ]
+    content: Box main_box {
+      orientation: vertical;
+      spacing: 0;
     };
   };
 }

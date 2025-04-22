@@ -3,6 +3,7 @@ ambersonic_sources = [
   'application.vala',
   'window.vala',
   'preferences.vala',
+  'api.vala',
 ]
 
 blueprints = custom_target('blueprints',
@@ -19,6 +20,8 @@ ambersonic_deps = [
   config_dep,
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
+  dependency('libsoup-3.0'),
+  dependency('libxml-2.0'),
 ]
 
 ambersonic_sources += gnome.compile_resources('ambersonic-resources',

@@ -6,7 +6,7 @@ public class Ambersonic.Preferences : Adw.PreferencesDialog {
     private unowned Adw.EntryRow username;
     [GtkChild]
     private unowned Adw.PasswordEntryRow password;
-    
+    [GtkChild]
     private unowned Gtk.Button test_connection;
 
     private Settings settings;
@@ -15,6 +15,10 @@ public class Ambersonic.Preferences : Adw.PreferencesDialog {
         Object ();
 
         settings = new Settings ("cat.of.power.Ambersonic");
+
+        test_connection.clicked.connect (() => {
+            this.on_test_connection_clicked ();
+        });
 
         address.text = settings.get_string ("address");
         username.text = settings.get_string ("username");
@@ -27,5 +31,19 @@ public class Ambersonic.Preferences : Adw.PreferencesDialog {
         this.closed.connect (() => {
             settings.apply ();
         });
+    }
+
+    public void on_test_connection_clicked () {
+        var connection_status = Ambersonic.Api.check_connection ();
+        
+        if (connection_status > 0) {
+            if (connection_status == 1) {
+                this.test_connection.set_label ("Connection successful");
+            } else {
+                this.test_connection.set_label ("Incorrect username or password");
+            }
+        } else {
+            this.test_connection.set_label ("Connection failed");
+        }
     }
 }
