@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=ambersonic
+Name=Ambersonic
 Exec=ambersonic
 Icon=cat.of.power.Ambersonic
 Terminal=false
 Type=Application
-Categories=Utility;
+Categories=Multimedia;AudioVideo;Audio;
 Keywords=GTK;
 StartupNotify=true
 DBusActivatable=true
