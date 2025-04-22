@@ -1,9 +1,11 @@
-# Ambersonic
+<p align="center">
+  <img width="160" src="data/icons/hicolor/scalable/apps/cat.of.power.Ambersonic.svg">
+</p>
+<h1 align="center">Ambersonic</h1>
+<h3 align="center">A GTK 4 Subsonic client for Linux</h3>
 
 > **Warning**
 > This application is highly WIP and not ready to use
-
-![icon](data/icons/hicolor/scalable/apps/cat.of.power.Ambersonic.svg)
 
 Ambersonic is a highly work-in-progress Subsonic-compatible client and API written with GTK4 and vala
 
