@@ -68,6 +68,7 @@ public class Ambersonic.AlbumCard : Gtk.Box {
             if (album_id != null) {
                 // TODO: Implement album details view
                 print ("Album clicked: %s\n", album_id);
+                print (Ambersonic.Api.get_download_url (album_id));
             }
         });
     }

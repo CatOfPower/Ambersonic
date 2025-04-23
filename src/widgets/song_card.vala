@@ -78,6 +78,7 @@ public class Ambersonic.SongCard : Gtk.Box {
             if (song_id != null) {
                 // TODO: Implement streaming
                 print ("Song clicked: %s\n", song_id);
+                print (Ambersonic.Api.get_stream_url (song_id));
             }
         });
     }
