@@ -1,0 +1,84 @@
+public class Ambersonic.SongCard : Gtk.Box {
+    public string title;
+    public string artist;
+    public string cover_art;
+
+    public SongCard (Xml.Node song) {
+        Object (orientation: Gtk.Orientation.HORIZONTAL, spacing: 12);
+
+        this.title = title;
+        this.artist = artist;
+        this.cover_art = cover_art;
+
+        this.add_css_class ("card");
+        this.margin_bottom = 6;
+        this.margin_start = 6;
+        this.margin_end = 6;
+
+        // Cover art
+        var song_cover = new Gtk.Image ();
+        song_cover.set_size_request (128, 128);
+        song_cover.add_css_class ("br-6"); // border radius
+        var song_cover_id = song.get_prop ("coverArt");
+        if (song_cover_id != null) {
+            song_cover.set_from_pixbuf (Ambersonic.Api.get_album_cover (song_cover_id));
+        }
+
+        // Song info box
+        var info_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 6);
+        info_box.halign = Gtk.Align.START;
+        info_box.valign = Gtk.Align.CENTER;
+        info_box.hexpand = true;
+
+        // Song title
+        var song_title = song.get_prop ("name") ?? song.get_prop ("title") ?? "Unknown song";
+        var title_label = new Gtk.Label (song_title);
+        title_label.add_css_class ("title-2");
+        title_label.halign = Gtk.Align.START;
+        title_label.wrap = true;
+        title_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+        title_label.lines = 2;
+        title_label.ellipsize = Pango.EllipsizeMode.END;
+
+        // Artist name
+        var artist_name = song.get_prop ("artist") ?? "Unknown Artist";
+        var artist_label = new Gtk.Label (artist_name);
+        artist_label.add_css_class ("dim-label");
+        artist_label.halign = Gtk.Align.START;
+        artist_label.wrap = true;
+        artist_label.wrap_mode = Pango.WrapMode.WORD_CHAR;
+        artist_label.lines = 1;
+        artist_label.ellipsize = Pango.EllipsizeMode.END;
+
+        var details = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
+
+        var duration = float.parse (song.get_prop ("duration") ?? "Unknown Duration") / 60;
+        var duration_minutes = (int) Math.floor (duration);
+        var duration_seconds = (int) Math.round ((duration - duration_minutes) * 60);
+        var duration_label = new Gtk.Label ("%d:%02d".printf (duration_minutes, duration_seconds));
+        details.append (duration_label);
+
+        var album_name = song.get_prop ("album") ?? "Unknown Album";
+        var album_label = new Gtk.Label (album_name);
+        details.append (album_label);
+
+        // Add all elements to the card
+        info_box.append (title_label);
+        info_box.append (artist_label);
+        info_box.append (details);
+
+        this.append (song_cover);
+        this.append (info_box);
+
+        // Add click behavior
+        var gesture = new Gtk.GestureClick ();
+        this.add_controller (gesture);
+        var song_id = song.get_prop ("id");
+        gesture.pressed.connect (() => {
+            if (song_id != null) {
+                // TODO: Implement streaming
+                print ("Song clicked: %s\n", song_id);
+            }
+        });
+    }
+}

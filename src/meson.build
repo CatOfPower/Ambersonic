@@ -4,6 +4,8 @@ ambersonic_sources = [
   'window.vala',
   'preferences.vala',
   'api.vala',
+  'widgets/album_card.vala',
+  'widgets/song_card.vala',
 ]
 
 blueprints = custom_target('blueprints',
@@ -22,6 +24,7 @@ ambersonic_deps = [
   dependency('libadwaita-1', version: '>= 1.4'),
   dependency('libsoup-3.0'),
   dependency('libxml-2.0'),
+  libm_dep,
 ]
 
 ambersonic_sources += gnome.compile_resources('ambersonic-resources',
@@ -33,5 +36,5 @@ ambersonic_sources += gnome.compile_resources('ambersonic-resources',
 executable('ambersonic', ambersonic_sources,
   dependencies: ambersonic_deps,
   include_directories: config_inc,
-       install: true,
+  install: true,
 )
