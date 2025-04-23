@@ -3,12 +3,14 @@ public class Ambersonic.SongCard : Gtk.Box {
     public string artist;
     public string cover_art;
 
+    // Add these as class properties
+    private Gtk.Label title_label;
+    private Gtk.Label artist_label;
+    private Gtk.Image song_cover;
+    private Gtk.Label duration_label;
+
     public SongCard (Xml.Node song) {
         Object (orientation: Gtk.Orientation.HORIZONTAL, spacing: 12);
-
-        this.title = title;
-        this.artist = artist;
-        this.cover_art = cover_art;
 
         this.add_css_class ("card");
         this.margin_bottom = 6;
@@ -16,7 +18,7 @@ public class Ambersonic.SongCard : Gtk.Box {
         this.margin_end = 6;
 
         // Cover art
-        var song_cover = new Gtk.Image ();
+        song_cover = new Gtk.Image ();
         song_cover.set_size_request (128, 128);
         song_cover.add_css_class ("br-6"); // border radius
         var song_cover_id = song.get_prop ("coverArt");
@@ -32,7 +34,7 @@ public class Ambersonic.SongCard : Gtk.Box {
 
         // Song title
         var song_title = song.get_prop ("name") ?? song.get_prop ("title") ?? "Unknown song";
-        var title_label = new Gtk.Label (song_title);
+        title_label = new Gtk.Label (song_title);
         title_label.add_css_class ("title-2");
         title_label.halign = Gtk.Align.START;
         title_label.wrap = true;
@@ -42,7 +44,7 @@ public class Ambersonic.SongCard : Gtk.Box {
 
         // Artist name
         var artist_name = song.get_prop ("artist") ?? "Unknown Artist";
-        var artist_label = new Gtk.Label (artist_name);
+        artist_label = new Gtk.Label (artist_name);
         artist_label.add_css_class ("dim-label");
         artist_label.halign = Gtk.Align.START;
         artist_label.wrap = true;
@@ -55,7 +57,7 @@ public class Ambersonic.SongCard : Gtk.Box {
         var duration = float.parse (song.get_prop ("duration") ?? "Unknown Duration") / 60;
         var duration_minutes = (int) Math.floor (duration);
         var duration_seconds = (int) Math.round ((duration - duration_minutes) * 60);
-        var duration_label = new Gtk.Label ("%d:%02d".printf (duration_minutes, duration_seconds));
+        duration_label = new Gtk.Label ("%d:%02d".printf (duration_minutes, duration_seconds));
         details.append (duration_label);
 
         var album_name = song.get_prop ("album") ?? "Unknown Album";
@@ -81,5 +83,26 @@ public class Ambersonic.SongCard : Gtk.Box {
                 print (Ambersonic.Api.get_stream_url (song_id));
             }
         });
+    }
+
+    public void update_from_node (Xml.Node song) {
+        // Update the card with new song data
+        var song_title = song.get_prop ("name") ?? song.get_prop ("title") ?? "Unknown Song";
+        var artist_name = song.get_prop ("artist") ?? "Unknown Artist";
+        var song_cover_id = song.get_prop ("coverArt");
+        
+        // Update existing widgets with new data
+        title_label.label = song_title;
+        artist_label.label = artist_name;
+        
+        if (song_cover_id != null) {
+            song_cover.set_from_pixbuf (Ambersonic.Api.get_album_cover (song_cover_id));
+        }
+        
+        // Update duration if available
+        var duration = float.parse (song.get_prop ("duration") ?? "0") / 60;
+        var duration_minutes = (int) Math.floor (duration);
+        var duration_seconds = (int) Math.round ((duration - duration_minutes) * 60);
+        duration_label.label = "%d:%02d".printf (duration_minutes, duration_seconds);
     }
 }

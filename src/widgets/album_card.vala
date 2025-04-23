@@ -66,9 +66,13 @@ public class Ambersonic.AlbumCard : Gtk.Box {
         var album_id = album.get_prop ("id");
         gesture.pressed.connect (() => {
             if (album_id != null) {
-                // TODO: Implement album details view
-                print ("Album clicked: %s\n", album_id);
-                print (Ambersonic.Api.get_download_url (album_id));
+                // Get detailed album info
+                var album_details = Ambersonic.Api.get_album (album_id);
+                var album_view = new Ambersonic.AlbumView (album_details);
+                
+                // Replace main content with album view
+                var main_window = this.get_root () as Ambersonic.Window;
+                main_window.show_album_view (album_view);
             }
         });
     }

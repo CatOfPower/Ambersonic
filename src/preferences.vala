@@ -1,4 +1,4 @@
-[GtkTemplate (ui = "/cat/of/power/Ambersonic/preferences.ui")]
+[GtkTemplate (ui = "/cat/of/power/Ambersonic/blueprints/preferences.ui")]
 public class Ambersonic.Preferences : Adw.PreferencesDialog {
     [GtkChild]
     private unowned Adw.EntryRow address;

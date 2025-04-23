@@ -1,4 +1,4 @@
-[GtkTemplate (ui = "/cat/of/power/Ambersonic/window.ui")]
+[GtkTemplate (ui = "/cat/of/power/Ambersonic/blueprints/window.ui")]
 public class Ambersonic.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.Box main_box;
@@ -18,5 +18,30 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
             albums_box.append (album_card);
             album = album.next;
         }
+    }
+
+    public void show_album_view (AlbumView album_view) {
+        // Remove all children from main_box
+        main_box.get_first_child ().unparent ();
+        
+        // Add the album view
+        main_box.append (album_view);
+    }
+
+    public void show_albums_list () {
+        // Store reference to ScrolledWindow
+        var scrolled = main_box.get_first_child () as Gtk.ScrolledWindow;
+        if (scrolled != null) {
+            scrolled.unparent ();
+        }
+        
+        // Create new ScrolledWindow if needed
+        if (scrolled == null) {
+            scrolled = new Gtk.ScrolledWindow ();
+            scrolled.set_child (albums_box);
+        }
+        
+        // Add back the scrolled window containing albums box
+        main_box.append (scrolled);
     }
 }

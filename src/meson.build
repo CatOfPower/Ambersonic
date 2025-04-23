@@ -6,13 +6,15 @@ ambersonic_sources = [
   'api.vala',
   'widgets/album_card.vala',
   'widgets/song_card.vala',
+  'views/album_view.vala',
 ]
 
 blueprints = custom_target('blueprints',
   input: files(
     'gtk/help-overlay.blp',
-    'window.blp',
-    'preferences.blp',
+    'blueprints/window.blp',
+    'blueprints/preferences.blp',
+    'blueprints/album_view.blp'
   ),
   output: '.',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],

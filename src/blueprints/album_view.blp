@@ -1,0 +1,69 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $AmbersonicAlbumView : Gtk.Box {
+  orientation: vertical;
+  spacing: 24;
+
+  Box header_box {
+    orientation: vertical;
+    spacing: 24;
+    margin-start: 24;
+    margin-end: 24;
+    margin-top: 24;
+    margin-bottom: 24;
+
+    Button back_button {
+      halign: start;
+      label: "Back";
+      styles ["flat"]
+    }
+
+    Box album_box {
+      orientation: horizontal;
+      spacing: 24;
+
+      Picture album_cover {
+        height-request: 200;
+        width-request: 200;
+        can-shrink: false;
+        styles ["br-12"]
+      }
+
+      Box info_box {
+        orientation: vertical;
+        spacing: 12;
+        valign: center;
+
+        Label album_title {
+          styles ["title-1"]
+          halign: start;
+        }
+
+        Label artist_name {
+          styles ["title-2"]
+          halign: start;
+        }
+
+        Label album_year {
+          styles ["dim-label"]
+          halign: start;
+        }
+      }
+    }
+  }
+
+  ScrolledWindow {
+    vexpand: true;
+
+    Box songs_box {
+      orientation: vertical;
+      spacing: 12;
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+      styles ["boxed-list"]
+    }
+  }
+}
