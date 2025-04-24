@@ -31,6 +31,7 @@ Ambersonic is a highly work-in-progress Subsonic-compatible client and API writt
 - meson
 - vala
 - blueprint-compiler
+- gstreamer
 
 ### Installation
 
