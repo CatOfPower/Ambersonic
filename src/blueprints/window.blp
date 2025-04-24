@@ -104,7 +104,7 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
             ]
           }
 
-          Scale {
+          Scale progress_scale {
             orientation: horizontal;
             vexpand: false;
             hexpand: true;
@@ -120,6 +120,10 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
             styles [
               "track-progress"
             ]
+
+            SignalAction {
+              signal-name: "value-changed";
+            }
           }
         }
       }

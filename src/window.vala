@@ -2,7 +2,7 @@
 public class Ambersonic.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.Box main_box;
-    
+
     [GtkChild]
     private unowned Gtk.Box albums_box;
 
@@ -12,13 +12,50 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.Button play_button;
 
+    [GtkChild]
+    private unowned Gtk.Scale progress_scale;
+
     public unowned bool is_playing = false;
     public Ambersonic.Player player;
+    private bool is_user_dragging = false;
 
     public Window (Gtk.Application app) {
         Object (application: app);
 
         player = new Ambersonic.Player ();
+
+        player.position_updated.connect ((pos, dur) => {
+            // Only update the scale if the user isn't dragging it
+            if (!is_user_dragging) {
+                progress_scale.set_range (0, dur);
+                progress_scale.set_value (pos);
+            }
+        });
+
+        player.start_position_monitoring ();
+
+        // Connect to press and release events
+        var click_controller = new Gtk.GestureClick ();
+        click_controller.pressed.connect (() => {
+            is_user_dragging = true;
+        });
+
+        click_controller.released.connect (() => {
+            player.set_position ((int64) progress_scale.get_value ());
+            is_user_dragging = false;
+        });
+
+        progress_scale.add_controller(click_controller);
+
+        // Optionally, if you need finer control with drag events
+        var motion_controller = new Gtk.EventControllerMotion();
+        motion_controller.leave.connect(() => {
+            if (is_user_dragging) {
+                player.set_position ((int64) progress_scale.get_value ());
+                is_user_dragging = false;
+            }
+        });
+        progress_scale.add_controller(motion_controller);
 
         Xml.Node album_list = Ambersonic.Api.get_album_list ("newest");
 
@@ -33,7 +70,7 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
 
     public void show_album_view (AlbumView album_view) {
         main_box.get_first_child ().unparent ();
-        
+
         main_box.append (album_view);
         player_box.unparent ();
         main_box.append (player_box);
@@ -45,13 +82,13 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
         if (scrolled != null) {
             scrolled.unparent ();
         }
-        
+
         // Create new ScrolledWindow if needed
         if (scrolled == null) {
             scrolled = new Gtk.ScrolledWindow ();
             scrolled.set_child (albums_box);
         }
-        
+
         // Add back the scrolled window containing albums box
         main_box.append (scrolled);
         player_box.unparent ();
