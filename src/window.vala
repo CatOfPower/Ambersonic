@@ -6,6 +6,9 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.Box albums_box;
 
+    [GtkChild]
+    private unowned Gtk.Box player_box;
+
     public Window (Gtk.Application app) {
         Object (application: app);
 
@@ -21,11 +24,11 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
     }
 
     public void show_album_view (AlbumView album_view) {
-        // Remove all children from main_box
         main_box.get_first_child ().unparent ();
         
-        // Add the album view
         main_box.append (album_view);
+        player_box.unparent ();
+        main_box.append (player_box);
     }
 
     public void show_albums_list () {
@@ -43,5 +46,7 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
         
         // Add back the scrolled window containing albums box
         main_box.append (scrolled);
+        player_box.unparent ();
+        main_box.append (player_box);
     }
 }

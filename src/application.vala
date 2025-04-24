@@ -27,15 +27,17 @@ public class Ambersonic.Application : Adw.Application {
     }
 
     private void on_about_action () {
-        string[] developers = { "Alex" };
+        string[] developers = { "CatOfPower" };
         var about = new Adw.AboutDialog () {
             application_name = "ambersonic",
             application_icon = "cat.of.power.Ambersonic",
-            developer_name = "Alex",
+            developer_name = "CatOfPower",
             translator_credits = _("translator-credits"),
             version = "0.1.0",
             developers = developers,
-            copyright = "© 2025 Alex",
+            copyright = "© 2025 CatOfPower",
+            issue_url = "https://github.com/CatOfPower/Ambersonic/issues",
+            website = "https://github.com/CatOfPower/Ambersonic",
         };
 
         about.present (this.active_window);

@@ -38,6 +38,96 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
           ]
         }
       }
+
+      Box player_box {
+        orientation: horizontal;
+        spacing: 6;
+        margin-start: 12;
+        margin-end: 12;
+        margin-top: 12;
+        margin-bottom: 12;
+        vexpand: false;
+        hexpand: true;
+        height-request: 64;
+
+        styles [
+          "player",
+          "card"
+        ]
+
+        Image {
+          icon-name: "audio-album-symbolic";
+          pixel-size: 48;
+          margin-start: 6;
+          halign: start;
+
+          styles [
+            "cover",
+            "br-6"
+          ]
+        }
+
+        Button {
+          label: _("_Play");
+          action-name: "app.play_pause";
+          icon-name: "media-playback-start-symbolic";
+          tooltip-text: _("Play");
+          margin-start: 6;
+          vexpand: false;
+          hexpand: false;
+          valign: center;
+
+          styles [
+            "circular"
+          ]
+        }
+
+        Box {
+          orientation: vertical;
+          spacing: 3;
+          margin-start: 6;
+          margin-end: 6;
+          vexpand: true;
+          hexpand: true;
+
+          Box {
+            orientation: horizontal;
+            spacing: 6;
+
+            Label {
+              label: _("Track Title");
+              halign: start;
+              valign: center;
+              ellipsize: end;
+              margin-start: 12;
+              margin-top: 6;
+              
+              styles [
+                "track-title",
+                "title-2"
+              ]
+            }
+          }
+
+          Scale {
+            orientation: horizontal;
+            vexpand: false;
+            hexpand: true;
+            draw-value: false;
+            adjustment: Adjustment {
+              lower: 0;
+              upper: 100;
+              value: 0;
+              step-increment: 1;
+              page-increment: 10;
+            };
+
+            styles [
+              "track-progress"
+            ]
+          }
+        }
+      }
     };
   };
 }
