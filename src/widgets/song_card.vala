@@ -2,6 +2,7 @@ public class Ambersonic.SongCard : Gtk.Box {
     public string title;
     public string artist;
     public string cover_art;
+    public string song_id;
 
     // Add these as class properties
     private Gtk.Label title_label;
@@ -17,11 +18,15 @@ public class Ambersonic.SongCard : Gtk.Box {
         this.margin_start = 6;
         this.margin_end = 6;
 
+        // Store song ID
+        song_id = song.get_prop ("id");
+
         // Cover art
         song_cover = new Gtk.Image ();
         song_cover.set_size_request (128, 128);
         song_cover.add_css_class ("br-6"); // border radius
         var song_cover_id = song.get_prop ("coverArt");
+        cover_art = song_cover_id;
         if (song_cover_id != null) {
             song_cover.set_from_pixbuf (Ambersonic.Api.get_album_cover (song_cover_id));
         }
@@ -34,6 +39,7 @@ public class Ambersonic.SongCard : Gtk.Box {
 
         // Song title
         var song_title = song.get_prop ("name") ?? song.get_prop ("title") ?? "Unknown song";
+        title = song_title;
         title_label = new Gtk.Label (song_title);
         title_label.add_css_class ("title-2");
         title_label.halign = Gtk.Align.START;
@@ -44,6 +50,7 @@ public class Ambersonic.SongCard : Gtk.Box {
 
         // Artist name
         var artist_name = song.get_prop ("artist") ?? "Unknown Artist";
+        artist = artist_name;
         artist_label = new Gtk.Label (artist_name);
         artist_label.add_css_class ("dim-label");
         artist_label.halign = Gtk.Align.START;
@@ -79,12 +86,11 @@ public class Ambersonic.SongCard : Gtk.Box {
         // Add click behavior
         var gesture = new Gtk.GestureClick ();
         this.add_controller (gesture);
-        var song_id = song.get_prop ("id");
         gesture.pressed.connect (() => {
             if (song_id != null) {
-                // TODO: Implement streaming
-                print ("Song clicked: %s\n", song_id);
-                print (Ambersonic.Api.get_stream_url (song_id));
+                // Play the song using our new PlayerManager
+                var player_manager = PlayerManager.get_instance();
+                player_manager.play_song(song_id);
             }
         });
     }
@@ -95,7 +101,14 @@ public class Ambersonic.SongCard : Gtk.Box {
         var artist_name = song.get_prop ("artist") ?? "Unknown Artist";
         var song_cover_id = song.get_prop ("coverArt");
         
+        // Update song ID
+        song_id = song.get_prop ("id");
+        
         // Update existing widgets with new data
+        title = song_title;
+        artist = artist_name;
+        cover_art = song_cover_id;
+        
         title_label.label = song_title;
         artist_label.label = artist_name;
         
