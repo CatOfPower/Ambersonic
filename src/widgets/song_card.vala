@@ -87,6 +87,11 @@ public class Ambersonic.SongCard : Gtk.Box {
                 main_window.player.url = url;
                 main_window.is_playing = false;
                 main_window.play_pause ();
+                var cover = main_window.player_box.get_first_child () as Gtk.Image;
+                cover.set_from_pixbuf (Ambersonic.Api.get_album_cover (song_cover_id));
+
+                var player_title = main_window.player_box.get_last_child ().get_first_child () as Gtk.Label;
+                player_title.label = song_title;
             }
         });
     }

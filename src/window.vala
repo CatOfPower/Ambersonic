@@ -7,7 +7,7 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
     private unowned Gtk.Box albums_box;
 
     [GtkChild]
-    private unowned Gtk.Box player_box;
+    public unowned Gtk.Box player_box;
 
     [GtkChild]
     private unowned Gtk.Button play_button;
@@ -69,7 +69,7 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
             if (player.url == "") {
                 return;
             }
-            
+
             is_playing = true;
             play_button.set_icon_name ("media-playback-pause-symbolic");
             play_button.set_tooltip_text (_("Pause"));
