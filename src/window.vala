@@ -13,9 +13,12 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
     private unowned Gtk.Button play_button;
 
     public unowned bool is_playing = false;
+    public Ambersonic.Player player;
 
     public Window (Gtk.Application app) {
         Object (application: app);
+
+        player = new Ambersonic.Player ();
 
         Xml.Node album_list = Ambersonic.Api.get_album_list ("newest");
 
@@ -57,17 +60,21 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
 
     public void play_pause () {
         if (is_playing) {
-            print ("Pausing\n");
             is_playing = false;
             play_button.set_icon_name ("media-playback-start-symbolic");
             play_button.set_tooltip_text (_("Play"));
             play_button.remove_css_class ("suggested-action");
+            player.pause ();
         } else {
-            print ("Playing\n");
+            if (player.url == "") {
+                return;
+            }
+            
             is_playing = true;
             play_button.set_icon_name ("media-playback-pause-symbolic");
             play_button.set_tooltip_text (_("Pause"));
             play_button.add_css_class ("suggested-action");
+            player.play ();
         }
     }
 }

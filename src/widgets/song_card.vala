@@ -82,9 +82,11 @@ public class Ambersonic.SongCard : Gtk.Box {
         var song_id = song.get_prop ("id");
         gesture.pressed.connect (() => {
             if (song_id != null) {
-                // TODO: Implement streaming
-                print ("Song clicked: %s\n", song_id);
-                print (Ambersonic.Api.get_stream_url (song_id));
+                string url = Ambersonic.Api.get_stream_url (song_id);
+                var main_window = this.get_root ().get_root () as Ambersonic.Window;
+                main_window.player.url = url;
+                main_window.is_playing = false;
+                main_window.play_pause ();
             }
         });
     }

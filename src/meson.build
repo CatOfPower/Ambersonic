@@ -7,6 +7,7 @@ ambersonic_sources = [
   'widgets/album_card.vala',
   'widgets/song_card.vala',
   'views/album_view.vala',
+  'player.vala'
 ]
 
 blueprints = custom_target('blueprints',
@@ -27,6 +28,7 @@ ambersonic_deps = [
   dependency('libsoup-3.0'),
   dependency('libxml-2.0'),
   libm_dep,
+  dependency('gstreamer-1.0'),
 ]
 
 ambersonic_sources += gnome.compile_resources('ambersonic-resources',
