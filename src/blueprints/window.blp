@@ -55,7 +55,7 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
           "card"
         ]
 
-        Image track_cover {
+        Image {
           icon-name: "audio-album-symbolic";
           pixel-size: 48;
           margin-start: 6;
@@ -94,7 +94,7 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
             orientation: horizontal;
             spacing: 6;
 
-            Label track_title_label {
+            Label {
               label: _("Track Title");
               halign: start;
               valign: center;
@@ -109,7 +109,7 @@ template $AmbersonicWindow: Adw.ApplicationWindow {
             }
           }
 
-          Scale track_progress {
+          Scale {
             orientation: horizontal;
             vexpand: false;
             hexpand: true;
