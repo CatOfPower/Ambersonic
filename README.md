@@ -9,6 +9,19 @@
 
 Ambersonic is a highly work-in-progress Subsonic-compatible client and API written with GTK4 and vala
 
+### What works
+- Playback
+- Covers
+- Seeking
+- Albums
+  
+### What doesn't work
+- Playlists
+- Search
+- Favorites
+- Anything other than 10 newest albums
+
+
 ### Dependencies
 
 - GTK 4
