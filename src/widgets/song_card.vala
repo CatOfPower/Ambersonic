@@ -52,16 +52,20 @@ public class Ambersonic.SongCard : Gtk.Box {
         artist_label.lines = 1;
         artist_label.ellipsize = Pango.EllipsizeMode.END;
 
-        var details = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
+        var details = new Gtk.Box (Gtk.Orientation.VERTICAL, 12);
 
         var duration = float.parse (song.get_prop ("duration") ?? "Unknown Duration") / 60;
         var duration_minutes = (int) Math.floor (duration);
         var duration_seconds = (int) Math.round ((duration - duration_minutes) * 60);
         duration_label = new Gtk.Label ("%d:%02d".printf (duration_minutes, duration_seconds));
+        duration_label.add_css_class ("dim-label");
+        duration_label.halign = Gtk.Align.START;
         details.append (duration_label);
 
         var album_name = song.get_prop ("album") ?? "Unknown Album";
         var album_label = new Gtk.Label (album_name);
+        album_label.add_css_class ("dim-label");
+        album_label.halign = Gtk.Align.START;
         details.append (album_label);
 
         // Add all elements to the card

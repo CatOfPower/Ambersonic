@@ -9,6 +9,11 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.Box player_box;
 
+    [GtkChild]
+    private unowned Gtk.Button play_button;
+
+    public unowned bool is_playing = false;
+
     public Window (Gtk.Application app) {
         Object (application: app);
 
@@ -48,5 +53,21 @@ public class Ambersonic.Window : Adw.ApplicationWindow {
         main_box.append (scrolled);
         player_box.unparent ();
         main_box.append (player_box);
+    }
+
+    public void play_pause () {
+        if (is_playing) {
+            print ("Pausing\n");
+            is_playing = false;
+            play_button.set_icon_name ("media-playback-start-symbolic");
+            play_button.set_tooltip_text (_("Play"));
+            play_button.remove_css_class ("suggested-action");
+        } else {
+            print ("Playing\n");
+            is_playing = true;
+            play_button.set_icon_name ("media-playback-pause-symbolic");
+            play_button.set_tooltip_text (_("Pause"));
+            play_button.add_css_class ("suggested-action");
+        }
     }
 }

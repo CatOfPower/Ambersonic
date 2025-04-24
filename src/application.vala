@@ -1,6 +1,6 @@
-
 public class Ambersonic.Application : Adw.Application {
     private Ambersonic.Preferences preferences;
+    private Ambersonic.Window window;
 
     public Application () {
         Object (
@@ -22,8 +22,16 @@ public class Ambersonic.Application : Adw.Application {
 
     public override void activate () {
         base.activate ();
-        var win = this.active_window ?? new Ambersonic.Window (this);
-        win.present ();
+        this.window = (this.active_window as Ambersonic.Window) ?? new Ambersonic.Window (this);
+        
+        // Add the play_pause action after window is created
+        var play_action = new SimpleAction ("play_pause", null);
+        play_action.activate.connect (() => {
+            window.play_pause ();
+        });
+        this.add_action (play_action);
+        
+        window.present ();
     }
 
     private void on_about_action () {
